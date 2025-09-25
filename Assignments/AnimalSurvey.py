@@ -1,4 +1,3 @@
-# Animal Survey Program that asks for 10 questions such as what is your favorite animal, where does it live, etc. then creates a summary with string adding
 q1 = input("What is your favorite animal?\n: ")
 q2 = input("Where does it live?\n: ")
 q3 = input("What does it eat?\n: ")
