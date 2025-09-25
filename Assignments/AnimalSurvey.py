@@ -1,0 +1,13 @@
+# Animal Survey Program that asks for 10 questions such as what is your favorite animal, where does it live, etc. then creates a summary with string adding
+q1 = input("What is your favorite animal?\n: ")
+q2 = input("Where does it live?\n: ")
+q3 = input("What does it eat?\n: ")
+q4 = input("How big is it?\n: ")
+q5 = input("What color is it?\n: ")
+q6 = input("Is it a pet or wild animal?\n: ")
+q7 = input("How many legs does it have?\n: ")
+q8 = input("Does it have fur, feathers, or scales?\n: ")
+q9 = input("Is it a mammal, bird, reptile, amphibian, or fish?\n: ")
+q10 = input("What sound does it make?\n: ")
+summary = "Your favorite animal is a " + q1 + ". It lives in " + q2 + ", and it eats " + q3 + ". It is " + q4 + " and is " + q5 + " in color. It is a " + q6 + " animal with " + q7 + " legs. It has " + q8 + " and is classified as a " + q9 + ". The sound it makes is: " + q10 + "."
+print(summary)
