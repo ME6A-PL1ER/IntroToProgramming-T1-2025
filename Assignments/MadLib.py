@@ -1,0 +1,24 @@
+# Mad lib program cuz i was told to
+
+print("Give me 6 nouns")
+noun1 = input("Noun 1: ")
+noun2 = input("Noun 2: ")
+noun3 = input("Noun 3: ")
+noun4 = input("Noun 4: ")
+noun5 = input("Noun 5: ")
+noun6 = input("Noun 6: ")
+print("Now give me 4 adjectives")
+adj1 = input("Adjective 1: ")
+adj2 = input("Adjective 2: ")
+adj3 = input("Adjective 3: ")
+adj4 = input("Adjective 4: ")
+print("Now give me 2 verbs")
+verb1 = input("Verb 1: ")
+verb2 = input("Verb 2: ")
+print("Now give me 1 adverb")
+adverb1 = input("Adverb 1: ")
+print("Now give me 1 emotion")
+emotion1 = input("Emotion 1: ")
+
+story = f"Once upon a time, in a {adj1} {noun1}, there lived a {adj2} {noun2}. Every day, the {noun3} would {verb1} {adverb1}. One day, a {adj3} {noun4} appeared and {verb2} the {noun5} away. The {noun6} was {adj4} and {emotion1}."
+print(story)
