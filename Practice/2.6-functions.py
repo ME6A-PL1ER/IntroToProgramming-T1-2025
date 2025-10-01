@@ -1,38 +1,29 @@
-# params and args
+def add_five_numbers(a, b, c, d, e):
+    if not all(isinstance(i, (int, float)) for i in [a, b, c, d, e]):
+        raise ValueError("All arguments must be numbers.")
+    if None in [a, b, c, d, e]:
+        raise ValueError("All five arguments must be provided.")
+    return a + b + c + d + e
 
-def add(x, y):
-    if not isinstance(x, (int, float)) or not isinstance(y, (int, float)):
-        raise ValueError("Both arguments must be numbers.")
-    if x is None or y is None:
-        raise ValueError("Both arguments must be provided.")
-    return x + y
+def full_name(first_name, last_name):
+    if not first_name or not last_name:
+        raise ValueError("Both first name and last name must be provided.")
+    return f"{str(first_name)} {str(last_name)}"
 
-def subtract(x, y):
-    if not isinstance(x, (int, float)) or not isinstance(y, (int, float)):
-        raise ValueError("Both arguments must be numbers.")
-    if x is None or y is None:
-        raise ValueError("Both arguments must be provided.")
-    return x - y
+def area_calc(l, w, h):
+    if not isinstance(l, (int, float)) or not isinstance(w, (int, float)) or not isinstance(h, (int, float)):
+        raise ValueError("All arguments must be numbers")
+    if None in [l, w, h]:
+        raise ValueError("All arguments must be provided")
+    return l * w * h
 
-def multiply(x, y):
-    if not isinstance(x, (int, float)) or not isinstance(y, (int, float)):
-        raise ValueError("Both arguments must be numbers.")
-    if x is None or y is None: 
-        raise ValueError("Both arguments must be provided.")
-    return x * y
+# im tired of checking for types
+def word_smash(a, b):
+    return f"{str(a)} {str(b)}"
 
-def divide(x, y):
-    if not isinstance(x, (int, float)) or not isinstance(y, (int, float)):
-        raise ValueError("Both arguments must be numbers.")
-    if y == 0:
-        raise ValueError("Division by zero is not allowed.")
-    if x is None or y is None:
-        raise ValueError("Both arguments must be provided.")
-    return x / y
+def echo(word, n):
+    return str(word) * abs(n)
 
-def power(x, y):
-    if not isinstance(x, (int, float)) or not isinstance(y, (int, float)):
-        raise ValueError("Both arguments must be numbers.")
-    if x is None or y is None:
-        raise ValueError("Both arguments must be provided.")
-    return x ** y
+def happy_birthday(name):
+    return f"happy birthday to you,\nhappy birthday to you,\nhappy birthday dear {str(name)},\nhappy birthday to you"
+
