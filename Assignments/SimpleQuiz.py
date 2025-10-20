@@ -1,28 +1,3 @@
-# Create a quiz that asks questions and tallies your score at the end.
-
-# ---
-
-# ### Overview
-
-# Use input statements to ask questions and store the answers as variables. Create a function called `tally_score` that checks if the answers are correct. Use if statements to check answers.
-
-# Clarity:
-# Input statements outside the function, if statements inside the function. No function parameters needed.
-
-# ---
-
-# ### Requirements
-
-# | **Less Comfortable** | **More Comfortable** |
-# | --- | --- |
-# | 5 questions | 10 questions |
-
-# ---
-
-# ### Hints
-
-# Be mindful of data types and conversions.
-
 q1 = input("What is 2 + 2? ")
 q2 = input("What is the capital of France? ")
 q3 = input("What is the largest planet in our solar system? ")
