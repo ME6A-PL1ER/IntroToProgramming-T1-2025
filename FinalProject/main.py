@@ -1,4 +1,6 @@
 import sys
+import time
+import threading
 import requests
 
 
@@ -22,6 +24,34 @@ Task:
 Output:
 - Return plain text only, with no extra formatting or lists.
 """.strip()
+
+def _run_with_spinner(work_fn, message="The DM is thinking..."):
+    """Run a blocking function while showing a console spinner.
+    Returns the function's result. Spinner only affects stdout.
+    """
+    stop = threading.Event()
+
+    def spin():
+        frames = "|/-\\"
+        i = 0
+        try:
+            while not stop.is_set():
+                sys.stdout.write("\r" + message + " " + frames[i % len(frames)])
+                sys.stdout.flush()
+                time.sleep(0.1)
+                i += 1
+        finally:
+            # Clear the spinner line
+            sys.stdout.write("\r" + " " * (len(message) + 2) + "\r")
+            sys.stdout.flush()
+
+    t = threading.Thread(target=spin, daemon=True)
+    t.start()
+    try:
+        return work_fn()
+    finally:
+        stop.set()
+        t.join()
 
 def ai_rewrite_scene(prev_scene_text, player_choice_text, scene_text, is_ending=False):
     """
@@ -444,6 +474,7 @@ def run():
     encounter_count = 0
     prev_scene_text = ""
     prev_choice_text = ""
+    next_display_text_cache = None
 
     while True:
         # if the scene isnt real then we just end the game
@@ -455,9 +486,14 @@ def run():
 
         encounter_count += 1
 
-        # Show scene (AI-rewritten if enabled)
+        # Show scene (AI-rewritten if enabled). If we prefetched it after the last choice,
+        # use the cached text so it prints instantly.
         is_ending = "ending" in scene
-        display_text = ai_rewrite_scene(prev_scene_text, prev_choice_text, scene["text"], is_ending)
+        if next_display_text_cache is not None:
+            display_text = next_display_text_cache
+            next_display_text_cache = None
+        else:
+            display_text = ai_rewrite_scene(prev_scene_text, prev_choice_text, scene["text"], is_ending)
         print("\n" + "=" * 60)
         print(display_text)
         print("=" * 60)
@@ -488,6 +524,25 @@ def run():
         prev_scene_text = scene["text"]
         prev_choice_text = chosen_text
 
+        # Resolve next scene now; if missing, end gracefully
+        next_scene = SCENES.get(next_scene_id)
+        if next_scene is None:
+            print("\nYou move forward into uncharted territory... and the story simply stops being written.")
+            print(f"(Scene '{next_scene_id}' not implemented.)")
+            print(f"Encounters experienced: {encounter_count}")
+            break
+
+        # If AI flavor is on, precompute the next scene's rewritten text while showing a spinner
+        # so the player sees a small "loading" moment after choosing.
+        if AI_FLAVORED_ICE_CREAM:
+            def _work():
+                return ai_rewrite_scene(prev_scene_text, prev_choice_text, next_scene["text"], "ending" in next_scene)
+
+            next_display_text_cache = _run_with_spinner(_work, "The DM is thinking...")
+        else:
+            next_display_text_cache = next_scene["text"]
+
+        # Advance to next scene
         scene_id = next_scene_id
 
 
