@@ -1,7 +1,8 @@
 import sys
 import requests
 
-USE_AI_FLAVOR = True
+
+AI_FLAVORED_ICE_CREAM = True
 
 OLLAMA_URL   = "http://localhost:11434/api/chat"
 OLLAMA_MODEL = "gemma3:1b"
@@ -25,9 +26,8 @@ Output:
 def ai_rewrite_scene(prev_scene_text, player_choice_text, scene_text, is_ending=False):
     """
     Rewrite the current scene description in a DM style using AI.
-    Never includes choices; safely falls back to original text on failure.
     """
-    if not USE_AI_FLAVOR:
+    if not AI_FLAVORED_ICE_CREAM:
         return scene_text
 
     try:
@@ -81,7 +81,7 @@ SCENES = {
     "start": {
         "text": (
             "Dust hangs in the air. You've been on the trail for days. "
-            "Up ahead: a crooked sign points LEFT (river crossing) and RIGHT (abandoned outpost)."
+            "Up ahead: a crooked sign poicnts LEFT (river crossing) and RIGHT (abandoned outpost)."
         ),
         "choices": {
             "Go left toward the river crossing.": "river_crossing",
@@ -437,6 +437,9 @@ SCENES = {
 
 
 def run():
+    if input("Enable AI-flavored ice cream narration? (y/n): ").strip().lower().startswith('n'):
+        global AI_FLAVORED_ICE_CREAM
+        AI_FLAVORED_ICE_CREAM = False
     scene_id = "start"
     encounter_count = 0
     prev_scene_text = ""
