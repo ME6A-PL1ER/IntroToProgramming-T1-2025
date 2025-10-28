@@ -1,50 +1,52 @@
-# story_mode.py
-# Minimal branching wasteland adventure with fixed encounters + optional AI flavor.
-# Requirements hit:
-# - 20+ encounters (non-ending scenes)
-# - 4+ endings
-# - Player chooses branches
-# - No inventory / health complexity (kept simple for grading)
-#
-# By default, AI flavor is OFF so it runs on any school machine without admin.
-
 import sys
-import json
-import requests  # only used if USE_AI_FLAVOR = True
+import requests
 
-# Turn this on at home if you have Ollama running.
-USE_AI_FLAVOR = False
+USE_AI_FLAVOR = True
 
 OLLAMA_URL   = "http://localhost:11434/api/chat"
-OLLAMA_MODEL = "gemma3-1b"
+OLLAMA_MODEL = "gemma3:1b"
 
-GUIDELINES = """
-You are a storyteller for a wasteland trail adventure.
-Your job:
-- Respond with 2-4 sentences of atmospheric narration that connects what just happened to what happens next.
-- Do NOT add choices.
-- Do NOT invent inventory, items, or stats.
-- Do NOT kill the player or end the story unless told the story is ending.
-Return plain text only.
+DEBUG_AI = True
+
+REWRITE_GUIDELINES = """
+You are the Dungeon Master narrator for a wasteland trail adventure.
+
+Task:
+- Rewrite the scene description in 2–4 sentences of atmospheric narration, dont overdo it, make sure an 8th grader could read it.
+- Keep the key facts from the given scene intact, but you may enhance tone and imagery.
+- Do NOT add or list choices, option numbers, inventory, items, stats, or meta instructions.
+- If this is not an ending scene, do NOT end the story or imply death.
+- If this IS an ending scene, you may conclude the story consistent with the provided ending.
+
+Output:
+- Return plain text only, with no extra formatting or lists.
 """.strip()
 
-def ai_bridge(prev_scene_text, player_choice_text, next_scene_text):
+def ai_rewrite_scene(prev_scene_text, player_choice_text, scene_text, is_ending=False):
     """
-    Ask the AI to narrate a short transition between scenes.
-    If AI flavor is disabled or something fails, return "".
+    Rewrite the current scene description in a DM style using AI.
+    Never includes choices; safely falls back to original text on failure.
     """
     if not USE_AI_FLAVOR:
-        return ""
+        return scene_text
 
     try:
+        user_prompt = (
+            ("Previous scene:\n" + prev_scene_text + "\n\n") if prev_scene_text else ""
+        )
+        if player_choice_text:
+            user_prompt += "Player chose:\n" + player_choice_text + "\n\n"
+        user_prompt += "Scene begins:\n" + scene_text + "\n\n"
+        user_prompt += (
+            "Notes: This IS an ending scene. Conclude appropriately.\n"
+            if is_ending else
+            "Notes: This is NOT an ending scene. Do not conclude or kill the player.\n"
+        )
+        user_prompt += "Rewrite the scene description now."
+
         messages = [
-            {"role": "system", "content": GUIDELINES},
-            {"role": "user", "content": (
-                "Previous scene:\n" + prev_scene_text +
-                "\n\nPlayer chose:\n" + player_choice_text +
-                "\n\nNext scene begins:\n" + next_scene_text +
-                "\n\nWrite the transition narration now."
-            )}
+            {"role": "system", "content": REWRITE_GUIDELINES},
+            {"role": "user", "content": user_prompt},
         ]
 
         resp = requests.post(
@@ -52,25 +54,27 @@ def ai_bridge(prev_scene_text, player_choice_text, next_scene_text):
             json={"model": OLLAMA_MODEL, "messages": messages, "stream": False},
             timeout=30
         )
+        resp.raise_for_status()
         data = resp.json()
 
-        # Ollama /api/chat typically responds like:
-        # { "message": { "role": "assistant", "content": "..." }, ... }
-        if "message" in data and isinstance(data["message"], dict):
-            return "\n\n" + data["message"].get("content", "").strip()
-        return ""
-    except Exception:
-        return ""
+        if DEBUG_AI and isinstance(data, dict) and "error" in data:
+            print(f"[AI] Ollama error: {data['error']}", file=sys.stderr)
 
+        if isinstance(data, dict) and isinstance(data.get("message"), dict):
+            content = data["message"].get("content", "").strip()
+            return content or scene_text
 
-# WORLD DEFINITION
-#
-# Each key in SCENES is one encounter.
-# "text": what the player sees.
-# "choices": label -> next_scene_id.
-# If a scene has "ending", the game stops there.
-#
-# NOTE: All scene IDs referenced in choices must exist, or the engine will stop gracefully.
+        if isinstance(data, dict) and "response" in data:
+            content = str(data["response"]).strip()
+            return content or scene_text
+
+        if DEBUG_AI:
+            print(f"[AI] Unexpected response: {data}", file=sys.stderr)
+        return scene_text
+    except Exception as e:
+        if DEBUG_AI:
+            print(f"[AI] Request failed: {e}", file=sys.stderr)
+        return scene_text
 
 SCENES = {
     # start scene (encounter 1)
@@ -392,7 +396,7 @@ SCENES = {
         }
     },
 
-    # ENDINGS (must have at least 4)
+    # ENDINGS
 
     "ending_fall": {
         "text": (
@@ -435,9 +439,11 @@ SCENES = {
 def run():
     scene_id = "start"
     encounter_count = 0
+    prev_scene_text = ""
+    prev_choice_text = ""
 
     while True:
-        # safety guard: if scene_id somehow isn't defined, bail gracefully
+        # if the scene isnt real then we just end the game
         scene = SCENES.get(scene_id)
         if scene is None:
             print("\nThe world ends here. There's nothing beyond this point.")
@@ -446,25 +452,25 @@ def run():
 
         encounter_count += 1
 
-        # Show scene
+        # Show scene (AI-rewritten if enabled)
+        is_ending = "ending" in scene
+        display_text = ai_rewrite_scene(prev_scene_text, prev_choice_text, scene["text"], is_ending)
         print("\n" + "=" * 60)
-        print(scene["text"])
+        print(display_text)
         print("=" * 60)
 
-        # If this scene is an ending, stop here
-        if "ending" in scene:
+        if is_ending:
             print(f"\nTHE END: {scene['ending']}")
             print(f"Encounters experienced: {encounter_count}")
             break
 
-        # Otherwise, list choices
         options = list(scene["choices"].keys())
         for i, choice_text in enumerate(options, start=1):
             print(f"{i}. {choice_text}")
 
         pick = input("> ").strip()
 
-        # Validate input
+        # Validate input 
         try:
             idx = int(pick) - 1
             assert 0 <= idx < len(options)
@@ -475,19 +481,9 @@ def run():
         chosen_text = options[idx]
         next_scene_id = scene["choices"][chosen_text]
 
-        # Get next scene safely
-        next_scene = SCENES.get(next_scene_id)
-        if next_scene is None:
-            # No hard crash; graceful narrative failure
-            print("\nYou move forward into uncharted territory... and the story simply stops being written.")
-            print(f"(Scene '{next_scene_id}' not implemented.)")
-            print(f"Encounters experienced: {encounter_count}")
-            break
-
-        # Optional AI bridge to add flavor between scenes
-        bridge_text = ai_bridge(scene["text"], chosen_text, next_scene["text"])
-        if bridge_text:
-            print(bridge_text)
+        # Remember context for next scene rewrite
+        prev_scene_text = scene["text"]
+        prev_choice_text = chosen_text
 
         scene_id = next_scene_id
 
