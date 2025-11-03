@@ -110,8 +110,8 @@ SCENES = {
     # start scene (encounter 1)
     "start": {
         "text": (
-            "Dust hangs in the air. You've been on the trail for days. "
-            "Up ahead: a crooked sign poicnts LEFT (river crossing) and RIGHT (abandoned outpost)."
+            "You carry a satchel of fever medicine meant for Haven before nightfall. "
+            "At a fork, a crooked sign points LEFT—river ford—and RIGHT—Redline Outpost. The wind smells like rain."
         ),
         "choices": {
             "Go left toward the river crossing.": "river_crossing",
@@ -122,8 +122,8 @@ SCENES = {
     # encounter 2
     "river_crossing": {
         "text": (
-            "The river is low, but fast. You see wagon tracks vanishing into the mud. "
-            "Something struggled here recently."
+            "The river runs low but swift, frothing around black stones. Fresh wagon ruts slide into the mud and vanish at the bank. "
+            "Someone forced a crossing not long ago."
         ),
         "choices": {
             "Try to ford the river anyway.": "ford_attempt",
@@ -134,8 +134,8 @@ SCENES = {
     # encounter 3
     "ford_attempt": {
         "text": (
-            "Cold water claws at your legs. Halfway across, you slip and slam into hidden stone. "
-            "You drag yourself up coughing."
+            "Ice water climbs past your knees. The current tugs your legs sideways; your shoulder smashes a hidden rock. "
+            "Breath gone, you cling and choose."
         ),
         "choices": {
             "Push forward, soaking and shivering.": "across_river",
@@ -146,8 +146,8 @@ SCENES = {
     # encounter 4
     "follow_tracks": {
         "text": (
-            "You follow the muddy imprints into scrub brush. You hear quiet crying. "
-            "A small camp is hidden in the reeds."
+            "You trace the ruts into thorn and reed. Quiet sobbing rides the wind. "
+            "A makeshift camp crouches under a bent bush."
         ),
         "choices": {
             "Call out gently.": "reeds_encounter",
@@ -158,8 +158,8 @@ SCENES = {
     # encounter 5
     "across_river": {
         "text": (
-            "You reach the far bank. Your boots are heavy, your clothes freezing. "
-            "On this side of the river you spot a burned wagon."
+            "You drag yourself onto the far bank, clothes heavy and fingers numb. "
+            "Ahead, a wagon sits gutted and burned, the ash still cold."
         ),
         "choices": {
             "Search the burned wagon.": "burned_wagon",
@@ -170,7 +170,8 @@ SCENES = {
     # encounter 6
     "river_retreat": {
         "text": (
-            "You back away from the current. Behind you, storm clouds are gathering like bruises."
+            "You step back from the churning water. Thunder rolls upriver; a storm gathers like a bruise. "
+            "Every minute you lose is a minute the fevers burn hotter in Haven."
         ),
         "choices": {
             "Make camp and wait out the weather.": "storm_camp",
@@ -181,8 +182,8 @@ SCENES = {
     # encounter 7
     "reeds_encounter": {
         "text": (
-            "A ragged traveler looks up, startled. 'You’re not with them?' they whisper. "
-            "'Please. Don’t let them take me back.'"
+            "A bandaged courier startles, eyes wide. 'Not with the Bridge Men?' they rasp. "
+            "'They mined the old span. Please—don’t take the ford or they'll hear you.'"
         ),
         "choices": {
             "Offer protection.": "protect_traveler",
@@ -193,8 +194,8 @@ SCENES = {
     # encounter 8
     "reeds_watch": {
         "text": (
-            "You crouch behind brush. The crying stops. For a long moment, nothing moves. "
-            "Then you feel eyes on you."
+            "From the shadows you watch. The sobbing fades into careful, measured breaths. "
+            "Whoever hides out there knows watchers—and now they’ve seen you."
         ),
         "choices": {
             "Reveal yourself peacefully.": "protect_traveler",
@@ -205,8 +206,8 @@ SCENES = {
     # encounter 9
     "burned_wagon": {
         "text": (
-            "The wagon’s been looted. You see scorch marks and old blood, not fresh. "
-            "Whoever did this moved on."
+            "Charred ribs of the wagon jut like bones. Scattered vials glitter in the ash—emptied and trampled. "
+            "Whoever hit them rolled on."
         ),
         "choices": {
             "Follow the wagon ruts down the canyon.": "canyon_path",
@@ -217,7 +218,7 @@ SCENES = {
     # encounter 10
     "lonely_trail": {
         "text": (
-            "The trail ahead is silent. You feel watched, but not threatened. Just… noticed."
+            "Back on the open trail, the sky goes wide and gray. You feel watched—measured, not menaced."
         ),
         "choices": {
             "Call out to the unseen watcher.": "voice_in_shade",
@@ -228,8 +229,8 @@ SCENES = {
     # encounter 11
     "storm_camp": {
         "text": (
-            "Wind rips your tarp. Lightning forks in the near hills. "
-            "You're alone with your thoughts and the smell of wet dust."
+            "Wind tears at your tarp; grit needles your face. Lightning claws along the far ridge. "
+            "The medicine thumps in your satchel like a second heartbeat."
         ),
         "choices": {
             "Stay awake and guard your camp.": "midnight_shapes",
@@ -240,8 +241,7 @@ SCENES = {
     # encounter 12
     "exhausted_march": {
         "text": (
-            "You push onward. Your legs feel like anchors. You stop noticing the cold. "
-            "You stop noticing much at all."
+            "You push onward until thought runs smooth and empty. The world narrows to the next step and the next."
         ),
         "choices": {
             "Force yourself to keep going.": "collapse_road",
@@ -252,8 +252,8 @@ SCENES = {
     # encounter 13
     "protect_traveler": {
         "text": (
-            "They relax. 'Then I owe you.' Their eyes are hard despite the shaking hands. "
-            "'You need to avoid the bridge.'"
+            "They unclench a little. 'Haven sent me to scout,' they whisper. Despite the shakes, their eyes are clear. "
+            "'Avoid Black Chasm. Raiders rigged the old bridge. Take the canyon or skirt south.'"
         ),
         "choices": {
             "Ask about the bridge.": "ruined_bridge",
@@ -264,8 +264,7 @@ SCENES = {
     # encounter 14
     "leave_traveler": {
         "text": (
-            "You back out through the reeds. The crying doesn’t start again. "
-            "The air feels heavier now."
+            "You back away without a word. The crying doesn’t return. The air feels heavier, like you’ve left a kindness undone."
         ),
         "choices": {
             "Head back to the river crossing.": "river_retreat",
@@ -276,8 +275,8 @@ SCENES = {
     # encounter 15
     "canyon_path": {
         "text": (
-            "The canyon narrows. Charred wagon wood litters both sides. "
-            "The rocks are blackened and sharp."
+            "The canyon pinches into a stone throat. Charred wood and bootprints stipple the sand. "
+            "Light thins to a dim ribbon ahead."
         ),
         "choices": {
             "Keep following the tracks into the dark.": "ambush_site",
@@ -288,8 +287,8 @@ SCENES = {
     # encounter 16
     "voice_in_shade": {
         "text": (
-            "A voice from nowhere: 'You shouldn’t be out here alone.' "
-            "You can’t tell if it’s friendly or mocking."
+            "A voice slides out from behind a collapsed billboard: 'You shouldn’t be out here alone.' "
+            "It isn’t quite friendly, but it knows the roads."
         ),
         "choices": {
             "Ask for guidance.": "guide_offer",
@@ -300,8 +299,7 @@ SCENES = {
     # encounter 17
     "silent_march": {
         "text": (
-            "You keep walking. Mile after mile. Eventually the fear becomes normal, "
-            "like background noise."
+            "You walk mile after mile until fear fades to background noise and only wind remains."
         ),
         "choices": {
             "Sit and rest on a flat rock.": "rest_stop",
@@ -312,7 +310,7 @@ SCENES = {
     # encounter 18
     "midnight_shapes": {
         "text": (
-            "Something moved just outside the firelight. More than once."
+            "Shapes move just outside the firelight—three, maybe four—circling as if testing fences you can’t see."
         ),
         "choices": {
             "Call out to it.": "voice_in_shade",
@@ -323,7 +321,7 @@ SCENES = {
     # encounter 19
     "restless_sleep": {
         "text": (
-            "Your dreams are cracked glass. You wake unsure if dawn is real or you invented it."
+            "Your sleep comes in ragged stitches. In every dream, lanterns bob just out of reach."
         ),
         "choices": {
             "Pack up and move on.": "silent_march",
@@ -334,8 +332,8 @@ SCENES = {
     # encounter 20
     "ruined_bridge": {
         "text": (
-            "You reach the old bridge. Boards missing. Ropes frayed. "
-            "The chasm below hums like a throat singing."
+            "You reach Black Chasm. The old bridge hangs in ribbons—boards missing, ropes frayed to hair. "
+            "Far below, the river speaks in cold thunder."
         ),
         "choices": {
             "Cross anyway.": "ending_fall",
@@ -346,8 +344,8 @@ SCENES = {
     # encounter 21
     "ambush_site": {
         "text": (
-            "You find it. The place where someone made a stand. "
-            "Scorch marks in a full circle. No bodies. No bones."
+            "Here someone made a stand. Scorch rings freckle the stone; spent shells glitter like dull teeth. "
+            "No bodies—only the feeling of a held breath."
         ),
         "choices": {
             "Stay here and wait for whoever did this.": "ending_taken",
@@ -358,8 +356,7 @@ SCENES = {
     # encounter 22
     "rest_stop": {
         "text": (
-            "For the first time today, you let yourself sit. Your heartbeat sounds like footsteps "
-            "behind you, fading."
+            "For the first time today you sit. The satchel presses its weight into your lap. Your heartbeat becomes distant footfalls."
         ),
         "choices": {
             "Get back up and push on.": "collapse_road",
@@ -370,7 +367,7 @@ SCENES = {
     # encounter 23
     "guide_offer": {
         "text": (
-            "The voice says, 'I can lead you somewhere safe. You won’t like the cost.'"
+            "'I can get you to Haven,' the voice says. 'Alive, quick, clean. You won’t like the cost.'"
         ),
         "choices": {
             "Accept the guide.": "ending_servitude",
@@ -381,7 +378,7 @@ SCENES = {
     # encounter 24
     "bad_blood": {
         "text": (
-            "The air goes still. You feel, for a moment, hunted."
+            "The air goes still. Whoever hides there decides what you are. For a heartbeat, you are prey."
         ),
         "choices": {
             "Keep walking like you’re not scared.": "collapse_road",
@@ -392,8 +389,7 @@ SCENES = {
     # encounter 25
     "collapse_road": {
         "text": (
-            "Your legs finally betray you. Knees hit dirt. You see light. "
-            "You wonder if it’s dawn."
+            "At last your knees fold. Dirt meets your cheek warm as a hand. Ahead, a light flares—lantern or lightning, you can’t tell."
         ),
         "choices": {
             "Reach toward the light.": "ending_fall",
@@ -405,8 +401,8 @@ SCENES = {
     # encounter 26
     "outpost_gate": {
         "text": (
-            "The outpost sits behind leaning sheet-metal walls. The gate is half open. "
-            "No lights. No voices. A hand-painted warning says: DO NOT ENTER AFTER DUSK."
+            "Redline Outpost crouches behind leaning sheet‑metal walls. The gate hangs half open. "
+            "No lights. No voices. A hand‑painted warning reads: DO NOT ENTER AFTER DUSK."
         ),
         "choices": {
             "Slip inside the outpost anyway.": "outpost_inside",
@@ -417,8 +413,8 @@ SCENES = {
     # encounter 27
     "outpost_inside": {
         "text": (
-            "You step through the crooked gate. Wind moves something metal across the concrete "
-            "with a slow scrape. The hairs rise on your arms. You are not alone in here."
+            "You slip through the crooked gate. Wind drags something metal across the concrete with a slow scrape. "
+            "Hair rises along your arms. You are not alone."
         ),
         "choices": {
             "Call out: 'I don't want trouble.'": "voice_in_shade",
@@ -430,38 +426,37 @@ SCENES = {
 
     "ending_fall": {
         "text": (
-            "Your vision tips and the world tilts with it. Wind howls up from below. "
-            "You fall, and the trail ends here."
+            "You stumble where the cliff has eaten the road. The world drops away; the chasm takes you quick and clean."
         ),
         "choices": {},
-        "ending": "lost_to_wilds"
+        "ending": "lost_to_the_chasm"
     },
 
     "ending_taken": {
         "text": (
-            "Shapes emerge in the dark. They don’t feel cruel. They feel patient. "
-            "You are lifted. You do not resist."
+            "Figures bloom from the dark—silent, certain. Rough hands find you; cloth covers your face. "
+            "The medicine goes one way. You go another."
         ),
         "choices": {},
-        "ending": "mysterious_vanish"
+        "ending": "captured_by_raiders"
     },
 
     "ending_settlement": {
         "text": (
-            "Lanterns. Fences. Quiet voices. A hidden settlement takes you in. "
-            "You’re safe, but you’ll never really be free again."
+            "Lanterns gleam on a palisade as voices rise in relief. Haven’s gate swings wide. "
+            "The medicine reaches trembling hands. Tonight, hope wins."
         ),
         "choices": {},
-        "ending": "quiet_return"
+        "ending": "haven_reached"
     },
 
     "ending_servitude": {
         "text": (
-            "The guide leads you to walls, food, warmth. Your debt is permanent. "
-            "Your life is no longer yours, but it is a life."
+            "The guide threads forgotten paths to stout walls and warm light. When the gate shuts, a ledger opens. "
+            "Debts here are lifetime things."
         ),
         "choices": {},
-        "ending": "retired_wealthy"
+        "ending": "bound_by_bargain"
     }
 }
 
@@ -477,7 +472,6 @@ def run():
     next_display_text_cache = None
 
     while True:
-        # if the scene isnt real then we just end the game
         scene = SCENES.get(scene_id)
         if scene is None:
             print("\nThe world ends here. There's nothing beyond this point.")
@@ -486,8 +480,6 @@ def run():
 
         encounter_count += 1
 
-        # Show scene (AI-rewritten if enabled). If we prefetched it after the last choice,
-        # use the cached text so it prints instantly.
         is_ending = "ending" in scene
         if next_display_text_cache is not None:
             display_text = next_display_text_cache
@@ -509,7 +501,6 @@ def run():
 
         pick = input("> ").strip()
 
-        # Validate input 
         try:
             idx = int(pick) - 1
             assert 0 <= idx < len(options)
@@ -520,11 +511,9 @@ def run():
         chosen_text = options[idx]
         next_scene_id = scene["choices"][chosen_text]
 
-        # Remember context for next scene rewrite
         prev_scene_text = scene["text"]
         prev_choice_text = chosen_text
 
-        # Resolve next scene now; if missing, end gracefully
         next_scene = SCENES.get(next_scene_id)
         if next_scene is None:
             print("\nYou move forward into uncharted territory... and the story simply stops being written.")
@@ -532,8 +521,6 @@ def run():
             print(f"Encounters experienced: {encounter_count}")
             break
 
-        # If AI flavor is on, precompute the next scene's rewritten text while showing a spinner
-        # so the player sees a small "loading" moment after choosing.
         if AI_FLAVORED_ICE_CREAM:
             def _work():
                 return ai_rewrite_scene(prev_scene_text, prev_choice_text, next_scene["text"], "ending" in next_scene)
@@ -542,7 +529,6 @@ def run():
         else:
             next_display_text_cache = next_scene["text"]
 
-        # Advance to next scene
         scene_id = next_scene_id
 
 
